@@ -52,6 +52,14 @@ let medianD12 = document.querySelector('#d12-rolls-median');
 let medianD20 = document.querySelector('#d20-rolls-median');
 
 
+// modes
+let modeD6 = document.querySelector('#d6-rolls-mode');
+let modeDoubleD6 = document.querySelector('#double-d6-rolls-mode');
+let modeD12 = document.querySelector('#d12-rolls-mode');
+let modeD20 = document.querySelector('#d20-rolls-mode');
+
+
+
 
 /*******************
  * EVENT LISTENERS *
@@ -120,17 +128,23 @@ function reset() {
     imageD12.src = './images/start/d12.jpeg';
     imageD20.src = './images/start/d20.jpg';
 
-    // means text area to N/A
+    // mean text areas to N/A
     meanD6.innerText = 'N/A';
     meanDoubleD6.innerText = 'N/A';
     meanD12.innerText = 'N/A';
     meanD20.innerText = 'N/A';
 
-    // medians text area to N/A
+    // median text areas to N/A
     medianD6.innerText = 'N/A';
     medianDoubleD6.innerText = 'N/A';
     medianD12.innerText = 'N/A';
     medianD20.innerText = 'N/A';
+
+    // mode text areas to N/A
+    modeD6.innerText = 'N/A';
+    modeDoubleD6.innerText = 'N/A';
+    modeD12.innerText = 'N/A';
+    modeD20.innerText = 'N/A';
 
 
 }
@@ -151,6 +165,7 @@ function d6RollFunction() {
 
     meanD6.innerText = getMean(sixes);
     medianD6.innerText = getMedian(sixes);
+    modeD6.innerText = getMode(sixes);
     console.log(sixes);
 };
 
@@ -166,6 +181,8 @@ function doubleD6RollFunction() {
 
     meanDoubleD6.innerText = getMean(doubleSixes);
     medianDoubleD6.innerText = getMedian(doubleSixes);
+    modeDoubleD6.innerText = getMode(doubleSixes);
+
     console.log(doubleSixes);
 };
 
@@ -180,6 +197,7 @@ function d12RollFunction() {
 
     meanD12.innerText = getMean(twelves);
     medianD12.innerText = getMedian(twelves);
+    modeD12.innerText = getMode(twelves);
 
     console.log(twelves);
 };
@@ -195,6 +213,7 @@ function d20RollFunction() {
 
     meanD20.innerText = getMean(twenties);
     medianD20.innerText = getMedian(twenties);
+    modeD20.innerText = getMode(twenties);
 
     console.log(twenties);
 };
@@ -206,6 +225,7 @@ function d20RollFunction() {
  ****************/
 
 function getMean(arr) {
+    console.log(arr);
     return arr.reduce((sum, num) => sum + num, 0) / arr.length;
 }
 
@@ -213,87 +233,67 @@ function getMean(arr) {
 function getMedian(arr) {
     
     arr.sort();
+    console.log(arr);
 
     // Odd arr
     if (arr.length % 2 !== 0) {
         return arr[(arr.length-1) / 2];
     }
 
-    // Odd arr
+    // even arr
     if (arr.length % 2 === 0) {
         return (arr[arr.length/2-1] + arr[arr.length/2]) / 2;
     }
 }
 
 
-
-
-
-/* ---- NEEDS TO BE FINISHED -----
-
 function getMode(arr) {
 
     console.log(arr);
-    console.log(Object.keys(arr[3]).length);
-    
+
     // Object for numbers and rep counts
     modeObj = {};
         
     // makes obj keys out of each number
     // assigns them to modeObj
-    for (let i = 0; i < arr.length; i++) {
-        
-        modeObj[arr[i]] = 0;
-        console.log(modeObj[arr[i]]);
-    }
-    
-    // adds +1 for each repeated number
-    for (let i = 0; i < arr.length; i++) {
+    arr.forEach(item => {
+        modeObj[item] = 0;
+    })
+    // console.log(modeObj)
 
-        modeObj[arr[i]] += 1;
-        console.log(modeObj[arr[i]]);
-    }
+    // adds +1 for each occurrence of the number
+    arr.forEach(item => {
+        modeObj[item]++;
+    })
+    // console.log(modeObj)
 
 
+    // loops through key/values in modeObj
+    // sets mode to most repeated number
+    // .push if more than one mode is found
+    let highestRep = 0;
+    let mode =  [];
 
+    for (key in modeObj) {
+        console.log(key)
 
-    console.log(modeObj;)
-    // Code for most repeated number will go here
-    // let repeats = Number(Object.keys(modeObj)[0]);
-    let repeats = Object.keys(modeObj)[0];
-    let repeatsKey = "";
+        if (modeObj[key] > highestRep) {
+            highestRep = modeObj[key]
+            mode = [Number(key)]
 
-    console.log(typeof repeats);
-    
-    for (let i = 0; i <= Object.keys(modeObj).length; i++) {
-        
-        console.log(typeof repeats);
-        
-        if (repeats <= modeObj[i]) {
-            
-            repeats = Number(modeObj[i]);
-            repeatsKey = Object.keys(modeObj)[i-1];
-
-            console.log(repeatsKey);
-            console.log(Object.keys(modeObj)[i-1]);
+        } else if (modeObj[key] === highestRep) {
+            mode.push(Number(key));
         }
     }
 
-    // console.log(Math.max(modeObj))
-    console.log(modeObj)
+    // if all numbers have the same frequency
+    if (mode === arr) {
+        return `No mode!`
+    }
 
-    return repeatsKey;
+    // console.log(highestRep);
+    // console.log(mode);
+    // console.log(modeObj)
+
+    return mode;
 }
-
-let obj1 = [1, 2, 2, 3, 3, 3, 4, 4, 4];
-console.log(getMode(obj1));
-
-
-// let obj2 = ['a', 'b', 'b', 'c', 'c', 'c', 'd', 'd', 'd', 'd'];
-// console.log(getMode(obj2));
-
-
-
-
-
-*/
