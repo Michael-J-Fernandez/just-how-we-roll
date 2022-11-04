@@ -35,7 +35,7 @@ let imageDoubleD62 = document.querySelector('#double-d6-roll-2');
 let imageD12 = document.querySelector('#d12-roll');
 
 // D20
-let imageD20 = document.querySelector('#d20-roll')
+let imageD20 = document.querySelector('#d20-roll');
 
 
 // means
@@ -103,8 +103,7 @@ resetButton.addEventListener('click', () => {
 
     reset();
 });
-// same?
-// resetButton.addEventListener('click', reset);
+// same? - resetButton.addEventListener('click', reset);
 
 
 
@@ -249,7 +248,7 @@ function getMedian(arr) {
 
 function getMode(arr) {
 
-    console.log(arr);
+    // console.log(arr);
 
     // Object for numbers and rep counts
     modeObj = {};
@@ -259,13 +258,13 @@ function getMode(arr) {
     arr.forEach(item => {
         modeObj[item] = 0;
     })
-    // console.log(modeObj)
+    // console.log(modeObj);
 
     // adds +1 for each occurrence of the number
     arr.forEach(item => {
         modeObj[item]++;
     })
-    // console.log(modeObj)
+    // console.log(modeObj);
 
 
     // loops through key/values in modeObj
@@ -275,11 +274,11 @@ function getMode(arr) {
     let mode =  [];
 
     for (key in modeObj) {
-        console.log(key)
+        // console.log(key);
 
         if (modeObj[key] > highestRep) {
-            highestRep = modeObj[key]
-            mode = [Number(key)]
+            highestRep = modeObj[key];
+            mode = [Number(key)];
 
         } else if (modeObj[key] === highestRep) {
             mode.push(Number(key));
@@ -288,12 +287,8 @@ function getMode(arr) {
 
     // if all numbers have the same frequency
     if (mode === arr) {
-        return `No mode!`
+        return `No mode!`;
     }
-
-    // console.log(highestRep);
-    // console.log(mode);
-    // console.log(modeObj)
 
     return mode;
 }
